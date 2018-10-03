@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springsecurity_mybatis.dao.UserDao">
+   <resultMap id="BaseResultMap" type="com.example.springsecurity_mybatis.entity.User">
+        <id column="id" property="id" jdbcType="INTEGER"></id>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"></result>
+        <result column="password" property="password" jdbcType="VARCHAR"></result>
+   </resultMap>
+    
+    <sql id="Base_Column_List">
+        id, user_name, password
+    </sql>
+    
+    <select id="getUser" resultMap="BaseResultMap" parameterType="long">
+        SELECT
+        <include refid="Base_Column_List"></include>
+        FROM USER
+        WHERE id=#{id}
+    </select>
+
+    <select id="getUserByUsername" resultMap="BaseResultMap" parameterType="java.lang.String">
+        SELECT
+        <include refid="Base_Column_List"></include>
+        FROM USER
+        WHERE user_name = #{userName}
+    </select>
+</mapper>
