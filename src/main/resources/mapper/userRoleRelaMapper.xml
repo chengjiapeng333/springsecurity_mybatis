@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springsecurity_mybatis.dao.UserRoleRelaDao">
+    <resultMap id="BaseResultMap" type="com.example.springsecurity_mybatis.entity.Role">
+        <id column="user_id" property="userId" jdbcType="INTEGER"></id>
+        <id column="role_id" property="roleId" jdbcType="INTEGER"></id>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        user_id, role_id
+    </sql>
+
+
+    <insert id="addRoleForUser" parameterType="user_role_rela">
+        insert into user_role_rela (user_id, role_id) VALUES (#{userId}, #{roleId});
+    </insert>
+
+</mapper>

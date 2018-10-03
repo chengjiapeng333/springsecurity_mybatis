@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Register</title>
+    <script src="http://upcdn.b0.upaiyun.com/libs/jquery/jquery-2.0.2.min.js"></script>
+    <script>
+        function register() {
+            var username = $('#username').val();
+            var password = $('#password').val();
+            console.log(username);
+            console.log(password);
+            var passwordConfirm = $('#passwordConfirm').val();
+            if(username==null||password==null||passwordConfirm==null||''==username||''==password||''==passwordConfirm) {
+                alert('请正确填写信息，字段不能为空');
+                return;
+            }
+            var reg = /^[0-9A-Za-z.@]{4,16}$/;
+            if(!reg.test(username)) {
+                alert('名称为4到16为，可以使用大小写字段， ".", "@", 不能包含中文');
+                return;
+            }
+            if(!(password==passwordConfirm)) {
+                alert('两次输入的密码必须一致');
+                return;
+            }
+            $.get('./checkusername/'+username, function (data, status) {
+                if(data.status==0) {
+                    alert(data.msg);
+                }else {
+                   addUser(username, password);
+                }
+            });
+        }
+
+        function addUser(username, password) {
+            console.log(username);
+            console.log(password);
+            var params = {
+                'userName':username,
+                'password':password
+            }
+            $.ajax({
+                url:'./register/add',
+                type:'POST',
+                contentType:'application/json',
+                data:JSON.stringify(params),
+                success:function (data) {
+                    alert(data.msg);
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+    <h2>欢迎来到注册界面</h2>
+    <form th:action="@{/register}" method="post">
+        <div><label> 用户名: <input type="text" name="username" id="username"/> </label></div>
+        <div><label> 密码: <input type="password" name="password" id="password"/> </label></div>
+        <div><label> 确认密码: <input type="password" name="passwordConfirm" id="passwordConfirm"/> </label></div>
+        <div><input type="button" onclick="register()" value="注册"/></div>
+    </form>
+</body>
+</html>

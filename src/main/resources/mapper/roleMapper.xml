@@ -8,6 +8,10 @@
         <result column="name" property="name" jdbcType="VARCHAR"></result>
     </resultMap>
 
+    <sql id="Base_Column_List">
+        id, name
+    </sql>
+
     <select id="findByUserName" resultMap="BaseResultMap" parameterType="java.lang.String">
         select r.*
         from role r
@@ -15,4 +19,12 @@
         left join user u on urr.user_id=u.id
         where u.user_name= #{userName}
     </select>
+    
+    <select id="findByRoleName" resultMap="BaseResultMap" parameterType="java.lang.String">
+      select
+        <include refid="Base_Column_List"></include>
+      from role
+        where name = #{name}
+    </select>
+
 </mapper>

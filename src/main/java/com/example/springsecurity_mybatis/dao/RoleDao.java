@@ -7,4 +7,7 @@ import java.util.List;
 @Repository
 public interface RoleDao {
     List<Role> findByUserName(String userName);
+
+    Role findByRoleName(String name);
+
 }

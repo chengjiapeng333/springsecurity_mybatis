@@ -9,4 +9,6 @@ public interface UserDao {
     User getUser(Long id);
 
     User getUserByUsername(String userName);
+
+    int addUser(User user);
 }
